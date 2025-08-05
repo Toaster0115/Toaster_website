@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Your Name</title>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen,
+        Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+      background-color: #ffffff;
+      color: #000000;
+      display: flex;
+      min-height: 100vh;
+    }
+
+    /* 左側選單 */
+    .sidebar {
+      width: 300px;
+      background-color: #f4f4f4;
+      padding: 40px 20px;
+      border-right: 1px solid #ccc;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      position: fixed;
+      top: 0;
+      bottom: 0;
+      left: 0;
+    }
+
+    .sidebar a {
+      text-decoration: none;
+      color: #333;
+      font-weight: bold;
+      transition: color 0.3s;
+    }
+
+    .sidebar a:hover {
+      color: #000;
+    }
+
+    /* 中央內容容器 */
+    .main-content {
+      margin-left: 200px; /* 配合左側 sidebar */
+      margin-right: 200px; /* 配合右側圖片區 */
+      flex: 1;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      padding: 40px 20px;
+      position: relative;
+    }
+
+    .center-box {
+      max-width: 600px;
+    }
+
+    .center-box img {
+      width: 200px;
+      height: 200px;
+      border-radius: 50%;
+      object-fit: cover;
+      margin-bottom: 20px;
+    }
+
+    h1 {
+      font-size: 2.8em;
+      margin: 0.2em 0;
+    }
+
+    p {
+      font-size: 1.2em;
+      margin: 0.5em 0 1.5em 0;
+      color: #444;
+    }
+
+    .links {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 15px;
+    }
+
+    .links a {
+      text-decoration: none;
+      color: #000000;
+      font-weight: bold;
+      border: 1.5px solid #000000;
+      padding: 10px 20px;
+      border-radius: 8px;
+      transition: all 0.3s ease;
+    }
+
+    .links a:hover {
+      background-color: #000000;
+      color: #ffffff;
+    }
+
+    /* 右側圖片與說明欄 */
+    .right-panel {
+      width: 300px;
+      position: fixed;
+      right: 0;
+      top: 0;
+      bottom: 0;
+      padding: 40px 20px;
+      overflow-y: auto;
+      background-color: #ffffff;
+      border-left: 1px solid #ccc;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      text-align: left;
+    }
+
+    .right-panel .item img {
+      width: 100%;
+      border-radius: 10px;
+      object-fit: cover;
+    }
+
+    .right-panel .item p {
+      margin-top: 8px;
+      font-size: 0.95em;
+      color: #333;
+    }
+
+    /* 響應式設計 */
+    @media (max-width: 768px) {
+      .sidebar {
+        display: none;
+      }
+
+      .right-panel {
+        position: static;
+        width: 100%;
+        border-left: none;
+        padding: 20px;
+        max-width: 100%;
+        margin-top: 30px;
+      }
+
+      .main-content {
+        margin: 0;
+        flex-direction: column;
+        padding: 20px;
+      }
+
+      .center-box img {
+        width: 150px;
+        height: 150px;
+      }
+
+      h1 {
+        font-size: 2em;
+      }
+
+      p {
+        font-size: 1em;
+      }
+    }
+    /* ===== 動畫定義區 ===== */
+
+@keyframes slideInLeft {
+  from {
+    transform: translateX(-50px);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+@keyframes slideInRight {
+  from {
+    transform: translateX(50px);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+@keyframes fadeInUp {
+  from {
+    transform: translateY(30px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+/* ===== 對應動畫套用區 ===== */
+
+.sidebar {
+  animation: slideInLeft 0.8s ease-out forwards;
+}
+
+.center-box {
+  opacity: 0;
+  animation: fadeInUp 1s ease-out 0.3s forwards;
+}
+
+.right-panel {
+  opacity: 0;
+  animation: slideInRight 0.8s ease-out 0.5s forwards;
+}
+
+  </style>
+</head>
+<body>
+
+  <!-- 左側選單 -->
+  <nav class="sidebar">
+    <a href="#">Home</a>
+    <a href="#">About</a>
+    <a href="#">Projects</a>
+    <a href="#">CV</a>
+    <a href="#">Contact</a>
+  </nav>
+
+  <!-- 中央內容 -->
+  <div class="main-content">
+    <div class="center-box">
+      <img src="your-image.jpg" alt="Profile picture" />
+      <h1>Your Name</h1>
+      <p>A brief description about yourself goes here.</p>
+      <div class="links">
+        <a href="https://github.com/yourusername" target="_blank">GitHub</a>
+        <a href="https://linkedin.com/in/yourusername" target="_blank">LinkedIn</a>
+        <a href="mailto:youremail@example.com">Email</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- 右側圖片與文字 -->
+  <aside class="right-panel">
+    <div class="item">
+      <img src="image1.jpg" alt="Image 1" />
+      <p>Description for image 1.</p>
+    </div>
+    <div class="item">
+      <img src="image2.jpg" alt="Image 2" />
+      <p>Description for image 2.</p>
+    </div>
+    <div class="item">
+      <img src="image3.jpg" alt="Image 3" />
+      <p>Description for image 3.</p>
+    </div>
+  </aside>
+
+</body>
+</html>
