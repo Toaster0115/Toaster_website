@@ -293,6 +293,44 @@
     .contact-section a:hover {
       color: #000;
     }
+
+    @media (max-width: 768px) {
+    /* 隱藏左側選單與右邊圖片欄 */
+    .sidebar,
+    .right-panel {
+      display: none;
+    }
+
+    /* 主內容展開寬度 */
+    .page-content {
+      margin: 0;
+      width: 100%;
+      padding: 0 20px;
+    }
+
+    /* Notes & Projects 卡片一欄式排列 */
+    .notes-grid,
+    .projects-grid {
+      grid-template-columns: 1fr;
+    }
+
+    /* 中央區塊圖片縮小 */
+    .center-box img {
+      max-width: 100%;
+      height: auto;
+    }
+
+    .center-box {
+      padding: 20px;
+    }
+
+    /* Contact 表單寬度調整 */
+    .contact-form input,
+    .contact-form textarea {
+      font-size: 1em;
+    }
+    }
+    
   </style>
 </head>
 <body>
