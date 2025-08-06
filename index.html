@@ -50,7 +50,7 @@
       height: 100vh;
       margin-left: 0;
       margin-right: 0;
-      width: 100%;
+      width: calc(100% - 400px);
       display: flex;
       justify-content: center;
       align-items: center;
@@ -82,18 +82,6 @@
       color: #444;
     }
 
-    .contact-info {
-      margin-top: 20px;
-      font-size: 1em;
-      color: #333;
-      line-height: 1.6;
-    }
-
-    .contact-info a {
-      color: #333;
-    }
-
-
 
 /* 右側圖片與說明欄 */
     .right-panel {
@@ -124,7 +112,7 @@
       color: #333;
     }
 
-/* 響應式設計 */
+/* 手機設計 */
     @media (max-width: 768px) {
       .sidebar {
         display: none;
@@ -156,6 +144,35 @@
 
       p {
         font-size: 1em;
+      }
+
+      /* 隱藏左側選單與右邊圖片欄 */
+      .sidebar,
+      .right-panel {
+        display: none;
+      }
+
+      /* 主內容展開寬度 */
+      .page-content {
+        margin: 0;
+        width: 100%;
+        padding: 0 20px;
+      }
+
+      /* Notes & Projects 卡片一欄式排列 */
+      .notes-grid,
+      .projects-grid {
+        grid-template-columns: 1fr;
+      }
+
+      /* 中央區塊圖片縮小 */
+      .center-box img {
+        max-width: 100%;
+        height: auto;
+      }
+
+      .center-box {
+        padding: 20px;
       }
     }
 
@@ -195,7 +212,6 @@
     }
 
 /* ===== 對應動畫套用區 ===== */
-
     .sidebar {
       animation: slideInLeft 0.8s ease-out forwards;
     }
@@ -209,7 +225,8 @@
       opacity: 0;
       animation: slideInRight 0.8s ease-out 0.5s forwards;
     }
-/* 🔸 初始隱藏動畫用 reveal 類別 */
+
+/* 初始隱藏動畫用 reveal 類別 */
     .reveal {
       opacity: 0;
       transform: translateY(30px);
@@ -225,8 +242,9 @@
 /* 外層垂直排列的容器 */
     .page-content {
       margin-left: 200px;
-      margin-right: 300px;
-      width: calc(100% - 500px); /* 避開 sidebar + right-panel */
+      margin-right: 200px;
+      width: calc(100% - 400px); 
+      box-sizing: border-box;
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -294,48 +312,25 @@
       color: #000;
     }
 
-    @media (max-width: 768px) {
-    /* 隱藏左側選單與右邊圖片欄 */
-    .sidebar,
-    .right-panel {
-      display: none;
+    .pdf-viewer {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      width: 90%;
     }
 
-    /* 主內容展開寬度 */
-    .page-content {
-      margin: 0;
-      width: 100%;
-      padding: 0 20px;
+    #pdf-frame {
+      width: 90%;
+      height: 100vh; /* 高度為整個視窗高度的 90% */
+      border: none;
     }
 
-    /* Notes & Projects 卡片一欄式排列 */
-    .notes-grid,
-    .projects-grid {
-      grid-template-columns: 1fr;
-    }
-
-    /* 中央區塊圖片縮小 */
-    .center-box img {
-      max-width: 100%;
-      height: auto;
-    }
-
-    .center-box {
-      padding: 20px;
-    }
-
-    /* Contact 表單寬度調整 */
-    .contact-form input,
-    .contact-form textarea {
-      font-size: 1em;
-    }
-    }
     
   </style>
 </head>
 <body>
 
-  <!-- 左側選單 -->
+<!-- 左側選單 -->
   <nav class="sidebar">
   <a href="index.html">Home</a>
   <a href="#about">About</a>
@@ -343,9 +338,9 @@
   <a href="#contact">Contact</a>
   </nav>
 
-  <!-- 中央內容 -->
+<!-- 中央內容 -->
   <main class="page-content">
-  <div class="main-content">
+  <div class="main-content" id="main-content">
     <div class="center-box">
       <img src="-u48c5k.jpg" alt="Profile picture" />
       <h1>Toaster's blog</h1>
@@ -353,7 +348,12 @@
     </div>
   </div>
 
-  <!-- About me 區塊 -->
+  <!-- PDF 顯示區-->
+  <div class="pdf-viewer" id="pdf-viewer" style="display: none;">
+    <iframe id="pdf-frame" src="" frameborder="0"></iframe>
+  </div>
+
+<!-- About me 區塊 -->
   <div class="about-section reveal" id="about">
       <h2>About Me</h2>
       <p>
@@ -362,12 +362,10 @@
       </p>
   </div>
 
-  <!-- Notes 區塊 -->
+<!-- Notes 區塊 -->
   <div class="notes-section reveal" id="notes">
     <h2>Notes</h2>
-    <p>
-      This section will include study notes, reflections, and summaries of topics I'm exploring such as physics, chemistry, or coding experiments.
-    </p>
+    <a href="#" onclick="loadPDF('Vector calculus.pdf')">量子力學筆記（PDF）</a>
   </div>
 
 <!-- Contact 區塊 -->
@@ -381,43 +379,58 @@
   </div>
 
   </main>
-
-  <!-- 右側圖片與文字 -->
+  
+<!-- 右側圖片與文字 -->
   <aside class="right-panel">
     <div class="item">
-      <img src="image1.jpg" alt="Image 1" />
-      <p>Description for image 1.</p>
+      <img src="Screenshot_20250806_045533_Chrome.jpg" alt="Image 1" />
     </div>
     <div class="item">
-      <img src="image2.jpg" alt="Image 2" />
-      <p>Description for image 2.</p>
+      <img src="image0.png" alt="Image 2" />
     </div>
     <div class="item">
-      <img src="image3.jpg" alt="Image 3" />
-      <p>Description for image 3.</p>
+      <img src="efefef.png" alt="Image 2" />
     </div>
   </aside>
 
-
+<!-- 消失動畫 -->
   <script>
-  const reveals = document.querySelectorAll('.reveal');
+    const reveals = document.querySelectorAll('.reveal');
 
-  const observer = new IntersectionObserver(
-    entries => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('active');
-        }
-      });
-    },
-    { threshold: 0.1 }
-  );
+    const observer = new IntersectionObserver(
+      entries => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('active');
+          }
+        });
+      },
+      { threshold: 0.1 }
+    );
 
-  reveals.forEach(section => {
-    observer.observe(section);
-  });
+    reveals.forEach(section => {
+      observer.observe(section);
+    });
   </script>
 
+  <script>
+    function loadPDF(pdfUrl) {
+      // 隱藏首頁中央內容
+      document.getElementById('main-content').style.display = 'none';
+
+      // 顯示 PDF 區塊，並載入目標 PDF
+      const pdfFrame = document.getElementById('pdf-frame');
+      pdfFrame.src = pdfUrl;
+
+      document.getElementById('pdf-viewer').style.display = 'flex';
+    }
+
+    function backToMain() {
+      // 顯示首頁內容、隱藏 PDF 區塊
+      document.getElementById('pdf-viewer').style.display = 'none';
+      document.getElementById('main-content').style.display = 'flex';
+    }
+  </script>
 
 </body>
 </html>
