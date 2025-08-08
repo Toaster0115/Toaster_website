@@ -4,6 +4,8 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link href="https://unpkg.com/vis-network/styles/vis-network.min.css" rel="stylesheet" />
+  <script src="https://unpkg.com/vis-network/standalone/umd/vis-network.min.js"></script>
   <title>Toaster's blog</title>
   <style>
     * {
@@ -43,6 +45,13 @@
       color: #001858;
     }
 
+    h3 {
+      font-size: 1.6em;
+      margin-bottom: 20px;
+      text-align: left;
+      color: #001858;
+    }
+
     p {
       font-size: 1.2em;
       margin: 0.5em 0 1.5em 0;
@@ -73,6 +82,19 @@
 
     .sidebar a:hover {
       color: #000;
+    }
+
+    .note-graph-container {
+      background-color: #fdf6e3; /* 柔和的米黃色背景，可改 */
+      padding: 15px;
+      margin-top: 20px;
+      border-radius: 10px;
+      border: 1px solid #ccc;
+    }
+
+    #note-graph {
+      width: 100%;
+      height: 250px;
     }
 
 /* 中央內容 */
@@ -183,7 +205,7 @@
       transform: translateY(0);
     }
 
-  @media screen and (max-width: 768px) {
+  @media screen and (max-width: 900px) {
     .sidebar, .right-panel {
       display: none;
     }
@@ -202,18 +224,46 @@
     }
   }
 
-/* notes contact 區塊 */
-    .notes-section{
-      max-width: 800px;
-      margin: 100px auto 80px auto;
-      padding: 40px 20px;
-      text-align: left;
-      background-color: #fae8be;
-      border-radius: 12px;
-      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
-      animation: fadeInUp 1s ease-out;
+/* notes 區塊*/
+    .notes-container {
+      padding: 20px;
+      border-radius: 10px;
+      width: 900px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+      margin-bottom: 30px;
     }
 
+    .notes-container hr {
+      border: none;
+      border-top: 2px solid #ccc;
+      margin: 20px 0;
+    }
+
+    .note-category {
+      margin-bottom: 30px;
+      text-align: left;
+    }
+
+    .note-category ul {
+      padding-left: 20px;
+      list-style-type: disc;
+    }
+
+    .note-category li {
+      margin-bottom: 6px;
+    }
+
+    .note-category a {
+      color: #001858;
+      font-size: 1.2em;
+      text-decoration: none;
+    }
+
+    .note-category a:hover {
+      text-decoration: underline;
+    }
+
+/* contact 區塊*/
     .contact-section {
       text-align: center;
       padding: 50px 20px;
@@ -248,26 +298,66 @@
 
 <!-- 左側選單 -->
   <nav class="sidebar">
-  <a href="index.html">Home</a>
-  <a href="#notes">Lecture notes</a>
-  <a href="#contact">Contact</a>
+    <a href="index.html">Home</a>
+    <a href="#notes">Notes</a>
+    <a href="#contact">Contact</a>
+
+    <div class="note-graph-container">
+      <h3>Note Graph</h3>
+      <div id="note-graph"></div>
+    </div>
   </nav>
 
 <!-- 中央內容 -->
   <main class="page-content">
   <div class="main-content" id="main-content">
     <div class="center-box">
-      <img src="-u48c5k.jpg" alt="Profile picture" />
+      <img src="pic/avatar.jpg" alt="Profile picture" />
       <h1>Toaster's blog</h1>
       <p>在台北帝國大學化學系坐牢。這裡拿來放一些我打的東東</p>
     </div>
   </div>
 
 <!-- Notes 區塊 -->
-  <div class="notes-section reveal" id="notes">
-    <h2>Lecture notes</h2>
-    <a href="Vector calculus.pdf" target="_blank" rel="noopener noreferrer">Vector Calculus 筆記</a>
-  </div>
+  <section id="notes" class="notes-section">
+    <h2 class="section-title">Lecture Notes</h2>
+
+    <div class="notes-container">
+      <hr>
+
+      <div class="note-category">
+        <h3>Applied math</h3>
+        <ul>
+          <li><a href="applied math/Linear algebra.pdf" target="_blank">Linear algebra</a></li>
+          <li><a href="applied math/ODE.pdf" target="_blank">Ordinary differential equation</a></li>
+          <li><a href="applied math/Vector calculus.pdf" target="_blank">Vector calculus</a></li>
+          <li><a href="applied math/PDE.pdf" target="_blank">Partial differential equation</a></li>
+          <li><a href="applied math/Green's function.pdf" target="_blank">Green's function</a></li>
+          <li><a href="notes/time_independent_1d_box.pdf" target="_blank">Laplace and Poisson's equation</a></li>
+        </ul>
+      </div>
+
+      <hr>
+    </div>
+  </section>
+
+  <section id="notes" class="notes-section">
+    <h2 class="section-title">Other notes</h2>
+
+    <div class="notes-container">
+      <hr>
+
+      <div class="note-category">
+        <h3>Reflection</h3>
+        <ul>
+          <li><a href="applied math/Linear algebra.pdf" target="_blank">臺大化學系大一下修課心得</a></li>
+          <li><a href="applied math/Linear algebra.pdf" target="_blank">臺大物理系應用數學一自學心得</a></li>
+        </ul>
+      </div>
+
+      <hr>
+    </div>
+  </section>
 
 <!-- Contact 區塊 -->
   <section id="contact" class="contact-section">
@@ -285,13 +375,13 @@
 <!-- 右側圖片與文字 -->
   <aside class="right-panel">
     <div class="item">
-      <img src="Screenshot_20250806_045533_Chrome.jpg" alt="Image 1" />
+      <img src="pic/toaster.jpg" alt="Image 1" />
     </div>
     <div class="item">
-      <img src="image0.png" alt="Image 2" />
+      <img src="pic/poop.png" alt="Image 2" />
     </div>
     <div class="item">
-      <img src="efefef.png" alt="Image 2" />
+      <img src="pic/starpoop.png" alt="Image 3" />
     </div>
   </aside>
 
@@ -314,6 +404,52 @@
       observer.observe(section);
     });
   </script>
+
+  <script>
+  // 定義節點（筆記）
+  const nodes = new vis.DataSet([
+    { id: 1, label: "Linear algebra", url: "applied math/Linear algebra.pdf" },
+    { id: 2, label: "ODE", url: "applied math/ODE.pdf" },
+    { id: 3, label: "Vector calculus", url: "applied math/Vector calculus.pdf" },
+    { id: 4, label: "PDE", url: "applied math/PDE.pdf" },
+    { id: 5, label: "Green's function", url: "applied math/Green's function.pdf" },
+  ]);
+
+  // 定義節點關聯（邊）
+  const edges = new vis.DataSet([
+    { from: 1, to: 2 },
+    { from: 2, to: 3 },
+    { from: 3, to: 4 },
+    { from: 4, to: 5 }
+  ]);
+
+  // 創建圖形
+  const container = document.getElementById("note-graph");
+  const data = { nodes, edges };
+  const options = {
+    nodes: {
+      shape: "dot",
+      size: 16,
+      font: { size: 20 }
+    },
+    edges: {
+      arrows: "to",
+      smooth: true
+    },
+    physics: {
+      enabled: true
+    },
+  };
+  const network = new vis.Network(container, data, options);
+
+  // 點擊節點時開啟對應 PDF
+  network.on("click", function (params) {
+    if (params.nodes.length) {
+      const node = nodes.get(params.nodes[0]);
+      if (node.url) window.open(node.url, "_blank");
+    }
+  });
+</script>
 
 </body>
 </html>
